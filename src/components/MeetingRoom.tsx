@@ -18,6 +18,7 @@ import {
   Shield,
   ArrowLeft,
 } from "lucide-react"
+import type { Socket } from "socket.io-client"
 
 interface User {
   email: string
@@ -36,6 +37,8 @@ interface MeetingRoomProps {
   setIsVideoOn: (value: boolean) => void
   showChat: boolean
   setShowChat: (value: boolean) => void
+  socket: Socket | null
+  isConnected: boolean
 }
 
 export default function MeetingRoom({
@@ -48,6 +51,8 @@ export default function MeetingRoom({
   setIsVideoOn,
   showChat,
   setShowChat,
+  socket,
+  isConnected,
 }: MeetingRoomProps) {
   return (
     <div className="min-h-screen bg-gray-900 text-white">
@@ -77,6 +82,7 @@ export default function MeetingRoom({
             <Shield className="w-3 h-3 mr-1" />
             An toàn
           </Badge>
+
           <div className="text-right">
             <div className="text-sm text-gray-300">{user.name}</div>
             <div className="text-xs text-gray-400">{user.email}</div>

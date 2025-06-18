@@ -4,6 +4,8 @@ import { useState } from "react"
 import LoginScreen from "../components/LoginScreen"
 import MeetingDashboard from "../components/MeetingDashboard"
 import MeetingRoom from "../components/MeetingRoom"
+import { userService } from "../services/api"
+import { useSocket } from "../hooks/useSocket"
 
 type AppState = "login" | "dashboard" | "meeting"
 
@@ -20,10 +22,24 @@ export default function Login() {
   const [isVideoOn, setIsVideoOn] = useState(true)
   const [showChat, setShowChat] = useState(false)
   const [currentUser, setCurrentUser] = useState<User | null>(null)
+  
+  // Socket connection
+  const { socket, isConnected } = useSocket(currentUser)
 
-  const handleLogin = (user: User) => {
-    setCurrentUser(user)
-    setAppState("dashboard")
+  const handleLogin = async (user: User) => {
+    try {
+      // Gửi thông tin user lên server
+      await userService.sendUserInfo(user)
+      
+      // Cập nhật state sau khi gửi thành công
+      setCurrentUser(user)
+      setAppState("dashboard")
+    } catch (error) {
+      console.error('Failed to send user info to server:', error)
+      // Vẫn cho phép user vào app ngay cả khi server không phản hồi
+      setCurrentUser(user)
+      setAppState("dashboard")
+    }
   }
 
   const handleJoinMeeting = () => {
@@ -34,9 +50,19 @@ export default function Login() {
     setAppState("dashboard")
   }
 
-  const handleLogout = () => {
-    setCurrentUser(null)
-    setAppState("login")
+  const handleLogout = async () => {
+    try {
+      // Gửi thông tin logout lên server nếu có user
+      if (currentUser) {
+        await userService.sendLogout(currentUser.id)
+      }
+    } catch (error) {
+      console.error('Failed to send logout to server:', error)
+    } finally {
+      // Luôn logout ở frontend dù server có phản hồi hay không
+      setCurrentUser(null)
+      setAppState("login")
+    }
   }
 
   if (appState === "login") {
@@ -48,7 +74,9 @@ export default function Login() {
       <MeetingDashboard 
         user={currentUser!} 
         onJoinMeeting={handleJoinMeeting} 
-        onLogout={handleLogout} 
+        onLogout={handleLogout}
+        socket={socket}
+        isConnected={isConnected}
       />
     )
   }
@@ -64,6 +92,8 @@ export default function Login() {
       setIsVideoOn={setIsVideoOn}
       showChat={showChat}
       setShowChat={setShowChat}
+      socket={socket}
+      isConnected={isConnected}
     />
   )
 }

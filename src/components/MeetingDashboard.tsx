@@ -9,6 +9,7 @@ import {
   Calendar,
   Link,
 } from "lucide-react"
+import type { Socket } from "socket.io-client"
 
 interface User {
   email: string
@@ -21,23 +22,40 @@ interface MeetingDashboardProps {
   user: User
   onJoinMeeting: () => void
   onLogout: () => void
+  socket: Socket | null
+  isConnected: boolean
 }
 
 export default function MeetingDashboard({
   user,
   onJoinMeeting,
   onLogout,
+  socket,
+  isConnected,
 }: MeetingDashboardProps) {
   const [meetingCode, setMeetingCode] = useState("")
 
   const handleJoinMeeting = () => {
     if (meetingCode.trim()) {
+      // Emit join meeting event qua socket
+      if (socket) {
+        socket.emit('join-meeting', {
+          meetingCode: meetingCode.trim(),
+          userId: user.id
+        })
+      }
       onJoinMeeting()
     }
   }
 
   const handleCreateMeeting = () => {
-    // Simulate creating a new meeting
+    // Emit create meeting event qua socket
+    if (socket) {
+      socket.emit('create-meeting', {
+        creatorId: user.id,
+        creatorName: user.name
+      })
+    }
     onJoinMeeting()
   }
 
@@ -54,6 +72,8 @@ export default function MeetingDashboard({
           </div>
 
           <div className="flex items-center gap-4">
+
+
             <div className="text-right">
               <div className="text-sm font-medium text-gray-900">{user.name}</div>
               <div className="text-xs text-gray-600">{user.email}</div>
@@ -124,6 +144,8 @@ export default function MeetingDashboard({
             </CardContent>
           </Card>
         </div>
+
+
 
         {/* Cuộc họp sắp tới */}
         <div className="mt-12">
