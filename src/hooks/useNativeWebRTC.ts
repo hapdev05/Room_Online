@@ -35,6 +35,7 @@ interface UseNativeWebRTCReturn {
   shareScreen: () => Promise<void>;
   stopScreenShare: () => void;
   isScreenSharing: boolean;
+  setError: (error: string | null) => void;
 }
 
 // WebRTC configuration
@@ -331,7 +332,7 @@ export const useNativeWebRTC = ({
       
       if (!peerConnection && data.signal.type === 'offer') {
         // Create new peer as answerer
-        const pc = await createPeerConnection(data.fromUserId, data.fromUserName, false);
+        await createPeerConnection(data.fromUserId, data.fromUserName, false);
         peerConnection = peersRef.current.get(data.fromUserId);
       }
       
@@ -427,6 +428,7 @@ export const useNativeWebRTC = ({
     toggleAudio,
     shareScreen,
     stopScreenShare,
-    isScreenSharing
+    isScreenSharing,
+    setError
   };
 }; 

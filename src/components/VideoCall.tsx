@@ -10,8 +10,7 @@ import {
   Monitor, 
   MonitorOff,
   Users,
-  Volume2,
-  VolumeX
+
 } from "lucide-react"
 
 interface VideoPlayerProps {
@@ -135,7 +134,6 @@ interface VideoGridProps {
 
 export const VideoGrid: React.FC<VideoGridProps> = ({
   localStream,
-  remoteStreams,
   peerConnections,
   currentUser,
   isVideoEnabled,

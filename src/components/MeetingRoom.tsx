@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import {
   Mic,
@@ -19,8 +17,7 @@ import {
   Shield,
   ArrowLeft,
   Hash,
-  Play,
-  Square
+
 } from "lucide-react"
 import { useRoomSocket } from "../hooks/useRoomSocket"
 // import { useWebRTC } from "../hooks/useWebRTC"  // simple-peer version
@@ -60,8 +57,6 @@ export default function MeetingRoom({
   setIsVideoOn,
   showChat,
   setShowChat,
-  socket,
-  isConnected,
   currentRoom,
 }: MeetingRoomProps) {
   // Enhanced room socket for real-time room features
@@ -92,7 +87,8 @@ export default function MeetingRoom({
     toggleAudio: webRTCToggleAudio,
     shareScreen,
     stopScreenShare,
-    isScreenSharing
+    isScreenSharing,
+    setError
   } = useWebRTC({
     socket: roomSocket,
     user: user,

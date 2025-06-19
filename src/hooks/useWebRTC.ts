@@ -53,7 +53,7 @@ export const useWebRTC = ({
   const [error, setError] = useState<string | null>(null);
   const [isScreenSharing, setIsScreenSharing] = useState(false);
   
-  const localVideoRef = useRef<HTMLVideoElement>(null);
+
   const peersRef = useRef<Map<string, PeerConnection>>(new Map());
 
   // Initialize media devices with fallback options
@@ -135,14 +135,16 @@ export const useWebRTC = ({
 
       // Try each constraint option
       for (const constraints of constraintOptions) {
-        try {
-          console.log('🔄 Trying constraints:', constraints);
-          stream = await navigator.mediaDevices.getUserMedia(constraints);
-          break;
-        } catch (err) {
-          console.warn('⚠️ Constraint failed:', constraints, err);
-          lastError = err;
-          continue;
+        if (constraints) {
+          try {
+            console.log('🔄 Trying constraints:', constraints);
+            stream = await navigator.mediaDevices.getUserMedia(constraints);
+            break;
+          } catch (err) {
+            console.warn('⚠️ Constraint failed:', constraints, err);
+            lastError = err;
+            continue;
+          }
         }
       }
 
@@ -242,7 +244,8 @@ export const useWebRTC = ({
       const videoTrack = screenStream.getVideoTracks()[0];
       
       peersRef.current.forEach((peerConnection) => {
-        const sender = peerConnection.peer._pc.getSenders().find(
+        const senders = (peerConnection.peer as any)._pc?.getSenders() || [];
+        const sender = senders.find(
           (s: RTCRtpSender) => s.track && s.track.kind === 'video'
         );
         if (sender) {
@@ -289,7 +292,8 @@ export const useWebRTC = ({
       
       // Replace screen track with camera track
       peersRef.current.forEach((peerConnection) => {
-        const sender = peerConnection.peer._pc.getSenders().find(
+        const senders = (peerConnection.peer as any)._pc?.getSenders() || [];
+        const sender = senders.find(
           (s: RTCRtpSender) => s.track && s.track.kind === 'video'
         );
         if (sender) {
@@ -342,7 +346,7 @@ export const useWebRTC = ({
     };
 
     // Handle peer events
-    peer.on('signal', (signal) => {
+    peer.on('signal', (signal: any) => {
       console.log('📡 Sending signal to', targetUserName);
       socket?.emit('webrtc-signal', {
         targetUserId,
@@ -351,7 +355,7 @@ export const useWebRTC = ({
       });
     });
 
-    peer.on('stream', (remoteStream) => {
+    peer.on('stream', (remoteStream: MediaStream) => {
       console.log('📺 Received remote stream from', targetUserName);
       peerConnection.stream = remoteStream;
       
@@ -366,7 +370,7 @@ export const useWebRTC = ({
       console.log('✅ Peer connected:', targetUserName);
     });
 
-    peer.on('error', (err) => {
+    peer.on('error', (err: any) => {
       console.error('❌ Peer error with', targetUserName, ':', err);
       // Remove failed peer
       setPeerConnections(prev => {
@@ -423,7 +427,7 @@ export const useWebRTC = ({
       
       if (!peer) {
         // Create new peer as answerer
-        peer = createPeer(data.fromUserId, data.fromUserName, false);
+        peer = createPeer(data.fromUserId, data.fromUserName, false) || undefined;
       }
       
       if (peer) {
@@ -494,6 +498,7 @@ export const useWebRTC = ({
     toggleAudio,
     shareScreen,
     stopScreenShare,
-    isScreenSharing
+    isScreenSharing,
+    setError
   };
 }; 
