@@ -10,4 +10,10 @@ export default defineConfig({
       "@": "/src",
     },
   },
+  define: {
+    global: 'globalThis',
+  },
+  optimizeDeps: {
+    include: ['simple-peer']
+  }
 })

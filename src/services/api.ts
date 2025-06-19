@@ -61,4 +61,82 @@ export const userService = {
   }
 };
 
+// Room service để quản lý phòng họp
+export const roomService = {
+  // Tạo phòng mới
+  createRoom: async (user: User, roomData: {
+    roomName: string;
+    description: string;
+    maxUsers: number;
+    isPrivate: boolean;
+    password?: string;
+  }) => {
+    try {
+      const response = await api.post('/api/rooms', {
+        user,
+        ...roomData
+      });
+      
+      console.log('Room created successfully:', response.data);
+      return response.data;
+    } catch (error) {
+      console.error('Error creating room:', error);
+      throw error;
+    }
+  },
+
+  // Tham gia phòng
+  joinRoom: async (user: User, roomCode: string, password?: string) => {
+    try {
+      const response = await api.post(`/api/rooms/join/${roomCode}`, {
+        user,
+        password
+      });
+      
+      console.log('Joined room successfully:', response.data);
+      return response.data;
+    } catch (error) {
+      console.error('Error joining room:', error);
+      throw error;
+    }
+  },
+
+  // Lấy thông tin phòng
+  getRoomInfo: async (roomId: string) => {
+    try {
+      const response = await api.get(`/api/rooms/${roomId}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error getting room info:', error);
+      throw error;
+    }
+  },
+
+  // Rời khỏi phòng
+  leaveRoom: async (user: User, roomId: string) => {
+    try {
+      const response = await api.post(`/api/rooms/${roomId}/leave`, {
+        user
+      });
+      
+      console.log('Left room successfully:', response.data);
+      return response.data;
+    } catch (error) {
+      console.error('Error leaving room:', error);
+      throw error;
+    }
+  },
+
+  // Lấy danh sách phòng của user
+  getUserRooms: async (userId: string) => {
+    try {
+      const response = await api.get(`/api/users/${userId}/rooms`);
+      return response.data;
+    } catch (error) {
+      console.error('Error getting user rooms:', error);
+      throw error;
+    }
+  }
+};
+
 export default api; 

@@ -63,19 +63,34 @@ export const useSocket = (user: User | null): UseSocketReturn => {
 
       // User management events
       newSocket.on('online-users-list', (data: { users: User[] }) => {
-        console.log('Online users updated:', data.users);
-        setOnlineUsers(data.users);
+        // Filter out mock/test users
+        const realUsers = data.users.filter(user => 
+          !user.name?.toLowerCase().includes('mock') && 
+          !user.name?.toLowerCase().includes('test') &&
+          !user.email?.toLowerCase().includes('mock') &&
+          !user.email?.toLowerCase().includes('test')
+        );
+        console.log('Online users updated:', realUsers);
+        setOnlineUsers(realUsers);
       });
 
       newSocket.on('user-joined', (data: { user: User }) => {
-        console.log('User joined:', data.user);
-        setOnlineUsers(prev => {
-          const exists = prev.some(u => u.id === data.user.id);
-          if (!exists) {
-            return [...prev, data.user];
-          }
-          return prev;
-        });
+        // Filter out mock/test users
+        const isMockUser = data.user.name?.toLowerCase().includes('mock') || 
+                          data.user.name?.toLowerCase().includes('test') ||
+                          data.user.email?.toLowerCase().includes('mock') ||
+                          data.user.email?.toLowerCase().includes('test');
+        
+        if (!isMockUser) {
+          console.log('User joined:', data.user);
+          setOnlineUsers(prev => {
+            const exists = prev.some(u => u.id === data.user.id);
+            if (!exists) {
+              return [...prev, data.user];
+            }
+            return prev;
+          });
+        }
       });
 
       newSocket.on('user-left', (data: { userId: string }) => {
