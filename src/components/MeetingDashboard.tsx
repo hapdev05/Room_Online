@@ -36,7 +36,6 @@ export default function MeetingDashboard({
   onJoinMeeting,
   onLogout,
   socket,
-  isConnected,
 }: MeetingDashboardProps) {
   const [meetingCode, setMeetingCode] = useState("")
   const [showDebugPanel, setShowDebugPanel] = useState(false)
@@ -135,7 +134,7 @@ export default function MeetingDashboard({
             <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
               <Video className="w-5 h-5 text-white" />
             </div>
-            <span className="text-xl font-semibold text-gray-900">Meet</span>
+            <span className="text-xl font-semibold text-gray-900">Room Online</span>
           </div>
 
           <div className="flex items-center gap-4">
@@ -171,7 +170,7 @@ export default function MeetingDashboard({
 
         <div className="text-center mb-12">
           <h1 className="text-3xl font-normal text-gray-900 mb-4">Cuộc họp video an toàn và chất lượng cao</h1>
-          <p className="text-gray-600">Bây giờ mọi người đều có thể tham gia cuộc họp Google Meet</p>
+          <p className="text-gray-600">Bây giờ mọi người đều có thể tham gia cuộc họp</p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">
@@ -215,118 +214,6 @@ export default function MeetingDashboard({
               </div>
             </CardContent>
           </Card>
-        </div>
-
-
-
-        {/* Cuộc họp sắp tới */}
-        <div className="mt-12">
-          <h2 className="text-xl font-medium text-gray-900 mb-6">Cuộc họp sắp tới</h2>
-          <Card className="border border-gray-200">
-            <CardContent className="p-6">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
-                  <Calendar className="w-6 h-6 text-orange-600" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="font-medium text-gray-900">Họp nhóm dự án</h3>
-                  <p className="text-sm text-gray-600">Hôm nay • 14:00 - 15:00</p>
-                  <p className="text-sm text-gray-500">meet.google.com/abc-defg-hij</p>
-                </div>
-                <Button variant="outline">Tham gia</Button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* User Rooms Panel */}
-        <div className="mt-12">
-          <div className="flex items-center gap-4 mb-6">
-            <h2 className="text-xl font-medium text-gray-900">Phòng của bạn</h2>
-            <Button 
-              variant="outline" 
-              size="sm"
-              onClick={() => {
-                setShowDebugPanel(!showDebugPanel)
-                if (!showDebugPanel) loadUserRooms()
-              }}
-            >
-              <Database className="w-4 h-4 mr-2" />
-              {showDebugPanel ? 'Ẩn' : 'Xem'} Rooms
-            </Button>
-          </div>
-
-          {showDebugPanel && (
-            <Card className="border border-gray-200">
-              <CardContent className="p-6">
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-medium text-gray-900">
-                      Phòng của bạn ({Object.keys(storedRooms).length})
-                    </h3>
-                    <div className="flex gap-2">
-                      <Button variant="outline" size="sm" onClick={loadUserRooms}>
-                        Refresh
-                      </Button>
-                      <Button variant="outline" size="sm" onClick={clearAllRooms}>
-                        <Trash2 className="w-4 h-4 mr-1" />
-                        Clear All
-                      </Button>
-                    </div>
-                  </div>
-
-                  {Object.keys(storedRooms).length === 0 ? (
-                    <div className="text-center py-8 text-gray-500">
-                      Bạn chưa có phòng nào. Tạo hoặc tham gia phòng để thấy ở đây.
-                    </div>
-                  ) : (
-                    <div className="grid gap-4">
-                      {Object.values(storedRooms).map((room: any) => (
-                        <div 
-                          key={room.roomCode} 
-                          className="p-4 border rounded-lg bg-gray-50"
-                        >
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <div className="font-medium text-gray-900">
-                                {room.roomName}
-                              </div>
-                              <div className="text-sm text-gray-600">
-                                Mã: <span className="font-mono">{room.roomCode}</span>
-                                {room.isPrivate && (
-                                  <span className="ml-2 text-red-600">(Riêng tư)</span>
-                                )}
-                              </div>
-                              <div className="text-xs text-gray-500">
-                                {room.members.length} thành viên • Tạo bởi: {room.createdBy}
-                              </div>
-                            </div>
-                            <div className="flex gap-2">
-                              <Button 
-                                variant="outline" 
-                                size="sm"
-                                onClick={() => handleShareRoom(room)}
-                              >
-                                <Share2 className="w-4 h-4 mr-1" />
-                                Share
-                              </Button>
-                              <Button 
-                                variant="outline" 
-                                size="sm"
-                                onClick={() => handleRoomJoined(room)}
-                              >
-                                Vào phòng
-                              </Button>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          )}
         </div>
       </div>
 

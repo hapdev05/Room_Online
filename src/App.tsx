@@ -6,10 +6,10 @@ import RoomPage from './pages/RoomPage';
 function App() {
   return (
    <BrowserRouter>
-   <Routes>
-    <Route path="/" element={<Login />} />
-    <Route path="/room/:roomCode" element={<RoomPage />} />
-   </Routes>
+    <Routes>
+     <Route path="/" element={<Login />} />
+     <Route path="/room/:roomCode" element={<RoomPage />} />
+    </Routes>
    </BrowserRouter>
   )
 }
