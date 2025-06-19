@@ -1,23 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import {
-  Mic,
-  MicOff,
-  Video,
-  VideoOff,
-  Monitor,
-  Phone,
-  MessageSquare,
-  Users,
-  Settings,
-  MoreVertical,
-  Clock,
-  Shield,
-  ArrowLeft,
-  Hash,
-} from "lucide-react";
+import { MessageSquare } from "lucide-react";
 import { useRoomSocket } from "../hooks/useRoomSocket";
 import JitsiMeeting from "./JitsiMeeting";
 import type { Socket } from "socket.io-client";
@@ -33,10 +17,6 @@ interface MeetingRoomProps {
   onBack: () => void;
   onLogout: () => void;
   user: User;
-  isMuted: boolean;
-  setIsMuted: (value: boolean) => void;
-  isVideoOn: boolean;
-  setIsVideoOn: (value: boolean) => void;
   showChat: boolean;
   setShowChat: (value: boolean) => void;
   socket: Socket | null;
@@ -48,22 +28,16 @@ export default function MeetingRoom({
   onBack,
   onLogout,
   user,
-  isMuted,
-  setIsMuted,
-  isVideoOn,
-  setIsVideoOn,
   showChat,
   setShowChat,
   currentRoom,
 }: MeetingRoomProps) {
   const [showJitsi, setShowJitsi] = useState(false);
-  const [message, setMessage] = useState("");
 
   // Socket connection for room management and chat
   const {
     roomMessages,
     roomMembers,
-    roomData,
     memberCount,
     isConnected: roomConnected,
     systemMessages,
@@ -71,8 +45,6 @@ export default function MeetingRoom({
     startTyping,
     stopTyping,
     refreshMembers,
-    forceRefreshRoom,
-    socket: roomSocket,
   } = useRoomSocket(user, currentRoom?.roomCode || currentRoom?.id || null);
 
   const roomName = currentRoom?.roomName || "Cuộc họp";

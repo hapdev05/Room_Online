@@ -27,8 +27,6 @@ export default function RoomPage() {
   const [needsAuth, setNeedsAuth] = useState(false);
 
   // Meeting controls
-  const [isMuted, setIsMuted] = useState(false);
-  const [isVideoOn, setIsVideoOn] = useState(true);
   const [showChat, setShowChat] = useState(false);
 
   // Socket connection
@@ -319,10 +317,6 @@ export default function RoomPage() {
       onBack={handleBackToDashboard}
       onLogout={handleLogout}
       user={currentUser}
-      isMuted={isMuted}
-      setIsMuted={setIsMuted}
-      isVideoOn={isVideoOn}
-      setIsVideoOn={setIsVideoOn}
       showChat={showChat}
       setShowChat={setShowChat}
       socket={socket}

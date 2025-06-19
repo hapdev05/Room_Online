@@ -1,15 +1,10 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
-  Mic,
-  MicOff,
   Video,
-  VideoOff,
-  Monitor,
   Phone,
   MessageSquare,
   Users,
-  Settings,
   ArrowLeft,
   ExternalLink,
   RefreshCw,
@@ -53,102 +48,12 @@ export default function JitsiMeeting({
     "-"
   )}`;
 
-  // Jitsi Meet configuration
-  const jitsiDomain = "meet.jit.si";
-  const baseUrl = `https://${jitsiDomain}/${cleanRoomName}`;
-
   // Debug logs
   console.log("🔍 Room Code Debug:", {
     originalRoomCode: roomCode,
     validRoomCode,
     cleanRoomName,
-    finalUrl: baseUrl,
   });
-
-  // Build URL with proper configuration
-  const jitsiUrl = new URL(baseUrl);
-
-  // Add configuration via hash (more reliable than query params)
-  const config = {
-    // User info
-    userInfo: {
-      displayName: user.name,
-      email: user.email,
-    },
-    // Conference config
-    config: {
-      prejoinPageEnabled: false,
-      startWithAudioMuted: false,
-      startWithVideoMuted: false,
-      enableWelcomePage: false,
-      enableClosePage: false,
-      disableInviteFunctions: false,
-      enableEmailInStats: false,
-      enableUserRolesBasedOnToken: false,
-      subject: `Phòng ${roomCode}`,
-      // Security and privacy
-      disableThirdPartyRequests: true,
-      enableInsecureRoomNameWarning: false,
-      doNotStoreRoom: true,
-      // UI customization
-      startScreenSharing: false,
-      enableNoisyMicDetection: true,
-      enableLipSync: false,
-    },
-    // Interface config
-    interfaceConfig: {
-      SHOW_JITSI_WATERMARK: false,
-      SHOW_WATERMARK_FOR_GUESTS: false,
-      SHOW_BRAND_WATERMARK: false,
-      APP_NAME: "Room Meeting",
-      NATIVE_APP_NAME: "Room Meeting",
-      PROVIDER_NAME: "Room Meeting",
-      GENERATE_ROOMNAMES_ON_WELCOME_PAGE: false,
-      DISPLAY_WELCOME_PAGE_CONTENT: false,
-      LANG_DETECTION: true,
-      INVITATION_POWERED_BY: false,
-      // Toolbar customization
-      TOOLBAR_BUTTONS: [
-        "microphone",
-        "camera",
-        "closedcaptions",
-        "desktop",
-        "fullscreen",
-        "fodeviceselection",
-        "hangup",
-        "profile",
-        "info",
-        "chat",
-        "recording",
-        "livestreaming",
-        "etherpad",
-        "sharedvideo",
-        "sharevideo",
-        "settings",
-        "raisehand",
-        "videoquality",
-        "filmstrip",
-        "invite",
-        "feedback",
-        "stats",
-        "shortcuts",
-        "tileview",
-        "download",
-        "help",
-      ],
-      SETTINGS_SECTIONS: [
-        "devices",
-        "language",
-        "moderator",
-        "profile",
-        "calendar",
-      ],
-    },
-  };
-
-  // Encode config as URL fragment
-  const configFragment = encodeURIComponent(JSON.stringify(config));
-  const finalUrl = `${baseUrl}#config=${configFragment}`;
 
   useEffect(() => {
     // Reset loading state when URL changes
@@ -292,7 +197,7 @@ export default function JitsiMeeting({
             <div className="flex items-center gap-1 md:gap-2 flex-shrink-0">
               {setShowChat && (
                 <Button
-                  variant={showChat ? "default" : "outline"}
+                  
                   size="sm"
                   onClick={() => setShowChat(!showChat)}
                   className="hidden lg:flex"
@@ -306,7 +211,7 @@ export default function JitsiMeeting({
               {/* Mobile Chat Toggle */}
               {setShowChat && (
                 <Button
-                  variant={showChat ? "default" : "outline"}
+                
                   size="sm"
                   onClick={() => setShowChat(!showChat)}
                   className="lg:hidden"
@@ -317,7 +222,7 @@ export default function JitsiMeeting({
               )}
 
               <Button
-                variant="outline"
+                
                 size="sm"
                 onClick={copyRoomLink}
                 title="Copy room link"
@@ -327,7 +232,7 @@ export default function JitsiMeeting({
               </Button>
 
               <Button
-                variant="outline"
+                
                 size="sm"
                 onClick={() => setIsFullscreen(!isFullscreen)}
                 title={isFullscreen ? "Exit fullscreen" : "Fullscreen"}
@@ -340,7 +245,7 @@ export default function JitsiMeeting({
               </Button>
 
               <Button
-                variant="outline"
+                
                 size="sm"
                 onClick={openInNewTab}
                 title="Mở trong tab mới"
