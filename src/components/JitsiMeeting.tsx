@@ -197,7 +197,6 @@ export default function JitsiMeeting({
             <div className="flex items-center gap-1 md:gap-2 flex-shrink-0">
               {setShowChat && (
                 <Button
-                  
                   size="sm"
                   onClick={() => setShowChat(!showChat)}
                   className="hidden lg:flex"
@@ -211,7 +210,6 @@ export default function JitsiMeeting({
               {/* Mobile Chat Toggle */}
               {setShowChat && (
                 <Button
-                
                   size="sm"
                   onClick={() => setShowChat(!showChat)}
                   className="lg:hidden"
@@ -222,7 +220,6 @@ export default function JitsiMeeting({
               )}
 
               <Button
-                
                 size="sm"
                 onClick={copyRoomLink}
                 title="Copy room link"
@@ -232,7 +229,6 @@ export default function JitsiMeeting({
               </Button>
 
               <Button
-                
                 size="sm"
                 onClick={() => setIsFullscreen(!isFullscreen)}
                 title={isFullscreen ? "Exit fullscreen" : "Fullscreen"}
@@ -245,7 +241,6 @@ export default function JitsiMeeting({
               </Button>
 
               <Button
-                
                 size="sm"
                 onClick={openInNewTab}
                 title="Mở trong tab mới"
