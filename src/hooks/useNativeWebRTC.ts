@@ -29,7 +29,7 @@ interface UseNativeWebRTCReturn {
   peerConnections: Map<string, PeerConnection>;
   isInitialized: boolean;
   error: string | null;
-  initializeMedia: () => Promise<void>;
+  initializeMedia: (audioOnly?: boolean) => Promise<void>;
   toggleVideo: () => void;
   toggleAudio: () => void;
   shareScreen: () => Promise<void>;

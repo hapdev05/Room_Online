@@ -36,7 +36,6 @@ export default function MeetingDashboard({
   onJoinMeeting,
   onLogout,
   socket,
-  isConnected,
 }: MeetingDashboardProps) {
   const [meetingCode, setMeetingCode] = useState("")
   const [showDebugPanel, setShowDebugPanel] = useState(false)
