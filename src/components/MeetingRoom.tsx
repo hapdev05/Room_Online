@@ -49,7 +49,7 @@ export default function MeetingRoom({
 
   const roomName = currentRoom?.roomName || "Cuộc họp";
   const roomCode =
-    currentRoom?.roomCode || currentRoom?.id || `ROOM-${Date.now()}`;
+    currentRoom?.roomCode || currentRoom?.id || `${Date.now()}`;
 
   // Debug current room data
   console.log("🏠 Room Debug:", {

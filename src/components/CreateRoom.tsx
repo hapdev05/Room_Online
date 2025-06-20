@@ -86,14 +86,14 @@ export default function CreateRoom({ user, onRoomCreated }: CreateRoomProps) {
       // Ensure room has all required fields
       room = {
         ...room,
-        roomCode: room.roomCode || `ROOM-${Date.now()}`,
+        roomCode: room.roomCode || `${Date.now()}`,
         roomName: room.roomName || roomData.roomName,
         roomLink:
           room.roomLink ||
-          `https://8e42-2001-ee0-4b49-c580-80e9-81fe-65db-5870.ngrok-free.app/RoomMeeting-${
-            room.roomCode || `ROOM-${Date.now()}`
+          `meet.jit.si/RoomMeeting-${
+            room.roomCode || `${Date.now()}`
           }`,
-        id: room.id || room.roomCode || `ROOM-${Date.now()}`,
+        id: room.id || room.roomCode || `${Date.now()}`,
       };
 
       console.log("🏠 Final room data:", room);
@@ -105,7 +105,7 @@ export default function CreateRoom({ user, onRoomCreated }: CreateRoomProps) {
       // Fallback: Create a demo room if server fails
       console.log("🔄 Creating demo room as fallback...");
       const demoRoom = {
-        roomCode: `DEMO-${Date.now().toString().slice(-6)}`,
+        roomCode: `${Date.now().toString().slice(-6)}`,
         roomName: roomData.roomName,
         description: roomData.description,
         maxUsers: roomData.maxUsers,

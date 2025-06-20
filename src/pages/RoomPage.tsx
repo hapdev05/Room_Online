@@ -104,7 +104,7 @@ export default function RoomPage() {
             maxUsers: 10,
             isPrivate: false,
             createdAt: new Date().toISOString(),
-            roomLink: `https://8e42-2001-ee0-4b49-c580-80e9-81fe-65db-5870.ngrok-free.app/RoomMeeting-${roomCode}`,
+            roomLink: `https://meet.jit.si/RoomMeeting-${roomCode}`,
           };
 
           setCurrentRoom(demoRoom);
