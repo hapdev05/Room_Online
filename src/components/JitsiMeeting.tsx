@@ -89,13 +89,13 @@ export default function JitsiMeeting({
 
   const openInNewTab = () => {
     // Simpler URL for new tab
-    const simpleUrl = `https://meet.jit.si/${cleanRoomName}`;
+    const simpleUrl = `https://8e42-2001-ee0-4b49-c580-80e9-81fe-65db-5870.ngrok-free.app/${cleanRoomName}`;
     window.open(simpleUrl, "_blank");
   };
 
   const copyRoomLink = async () => {
     try {
-      const simpleUrl = `https://meet.jit.si/${cleanRoomName}`;
+      const simpleUrl = `https://8e42-2001-ee0-4b49-c580-80e9-81fe-65db-5870.ngrok-free.app/${cleanRoomName}`;
       await navigator.clipboard.writeText(simpleUrl);
       // Could add a toast notification here
     } catch (error) {
@@ -287,7 +287,7 @@ export default function JitsiMeeting({
 
         {/* Full-Size Jitsi iframe */}
         <iframe
-          src={`https://meet.jit.si/${cleanRoomName}`}
+          src={`https://8e42-2001-ee0-4b49-c580-80e9-81fe-65db-5870.ngrok-free.app/${cleanRoomName}`}
           width="100%"
           height="100%"
           frameBorder="0"

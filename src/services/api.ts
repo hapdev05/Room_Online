@@ -1,14 +1,16 @@
-import axios from 'axios';
-import type { User } from '../types/user';
+import axios from "axios";
+import type { User } from "../types/user";
 
 // Base URL cho server Node.js - có thể thay đổi theo môi trường
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://20ac-2001-ee0-4b49-c580-797e-6c58-d5d7-bc67.ngrok-free.app';
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL ||
+  "https://8e42-2001-ee0-4b49-c580-80e9-81fe-65db-5870.ngrok-free.app";
 
 const api = axios.create({
   baseURL: API_BASE_URL,
   timeout: 10000,
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });
 
@@ -17,18 +19,18 @@ export const userService = {
   // Gửi thông tin user sau khi login
   sendUserInfo: async (user: User) => {
     try {
-      const response = await api.post('/api/users/login', {
+      const response = await api.post("/api/users/login", {
         id: user.id,
         email: user.email,
         name: user.name,
         picture: user.picture,
-        loginTime: new Date().toISOString()
+        loginTime: new Date().toISOString(),
       });
-      
-      console.log('User data sent successfully:', response.data);
+
+      console.log("User data sent successfully:", response.data);
       return response.data;
     } catch (error) {
-      console.error('Error sending user data to server:', error);
+      console.error("Error sending user data to server:", error);
       throw error;
     }
   },
@@ -39,7 +41,7 @@ export const userService = {
       const response = await api.put(`/api/users/${userId}`, userData);
       return response.data;
     } catch (error) {
-      console.error('Error updating user data:', error);
+      console.error("Error updating user data:", error);
       throw error;
     }
   },
@@ -47,40 +49,43 @@ export const userService = {
   // Gửi thông tin logout
   sendLogout: async (userId: string) => {
     try {
-      const response = await api.post('/api/users/logout', {
+      const response = await api.post("/api/users/logout", {
         id: userId,
-        logoutTime: new Date().toISOString()
+        logoutTime: new Date().toISOString(),
       });
-      
-      console.log('Logout sent successfully:', response.data);
+
+      console.log("Logout sent successfully:", response.data);
       return response.data;
     } catch (error) {
-      console.error('Error sending logout to server:', error);
+      console.error("Error sending logout to server:", error);
       throw error;
     }
-  }
+  },
 };
 
 // Room service để quản lý phòng họp
 export const roomService = {
   // Tạo phòng mới
-  createRoom: async (user: User, roomData: {
-    roomName: string;
-    description: string;
-    maxUsers: number;
-    isPrivate: boolean;
-    password?: string;
-  }) => {
+  createRoom: async (
+    user: User,
+    roomData: {
+      roomName: string;
+      description: string;
+      maxUsers: number;
+      isPrivate: boolean;
+      password?: string;
+    }
+  ) => {
     try {
-      const response = await api.post('/api/rooms', {
+      const response = await api.post("/api/rooms", {
         user,
-        ...roomData
+        ...roomData,
       });
-      
-      console.log('Room created successfully:', response.data);
+
+      console.log("Room created successfully:", response.data);
       return response.data;
     } catch (error) {
-      console.error('Error creating room:', error);
+      console.error("Error creating room:", error);
       throw error;
     }
   },
@@ -90,13 +95,13 @@ export const roomService = {
     try {
       const response = await api.post(`/api/rooms/join/${roomCode}`, {
         user,
-        password
+        password,
       });
-      
-      console.log('Joined room successfully:', response.data);
+
+      console.log("Joined room successfully:", response.data);
       return response.data;
     } catch (error) {
-      console.error('Error joining room:', error);
+      console.error("Error joining room:", error);
       throw error;
     }
   },
@@ -107,7 +112,7 @@ export const roomService = {
       const response = await api.get(`/api/rooms/${roomId}`);
       return response.data;
     } catch (error) {
-      console.error('Error getting room info:', error);
+      console.error("Error getting room info:", error);
       throw error;
     }
   },
@@ -116,13 +121,13 @@ export const roomService = {
   leaveRoom: async (user: User, roomId: string) => {
     try {
       const response = await api.post(`/api/rooms/${roomId}/leave`, {
-        user
+        user,
       });
-      
-      console.log('Left room successfully:', response.data);
+
+      console.log("Left room successfully:", response.data);
       return response.data;
     } catch (error) {
-      console.error('Error leaving room:', error);
+      console.error("Error leaving room:", error);
       throw error;
     }
   },
@@ -133,10 +138,10 @@ export const roomService = {
       const response = await api.get(`/api/users/${userId}/rooms`);
       return response.data;
     } catch (error) {
-      console.error('Error getting user rooms:', error);
+      console.error("Error getting user rooms:", error);
       throw error;
     }
-  }
+  },
 };
 
-export default api; 
+export default api;

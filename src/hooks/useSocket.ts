@@ -16,7 +16,7 @@ export const useSocket = (user: User | null): UseSocketReturn => {
   const [connectionError, setConnectionError] = useState<string | null>(null);
 
   // Sử dụng cùng base URL với API
-  const SOCKET_URL = import.meta.env.VITE_API_URL || 'https://20ac-2001-ee0-4b49-c580-797e-6c58-d5d7-bc67.ngrok-free.app';
+  const SOCKET_URL = import.meta.env.VITE_API_URL || 'https://8e42-2001-ee0-4b49-c580-80e9-81fe-65db-5870.ngrok-free.app';
 
   useEffect(() => {
     if (user) {

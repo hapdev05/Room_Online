@@ -90,7 +90,7 @@ export default function CreateRoom({ user, onRoomCreated }: CreateRoomProps) {
         roomName: room.roomName || roomData.roomName,
         roomLink:
           room.roomLink ||
-          `https://meet.jit.si/RoomMeeting-${
+          `https://8e42-2001-ee0-4b49-c580-80e9-81fe-65db-5870.ngrok-free.app/RoomMeeting-${
             room.roomCode || `ROOM-${Date.now()}`
           }`,
         id: room.id || room.roomCode || `ROOM-${Date.now()}`,
@@ -112,7 +112,7 @@ export default function CreateRoom({ user, onRoomCreated }: CreateRoomProps) {
         isPrivate: roomData.isPrivate,
         password: roomData.password,
         createdAt: new Date().toISOString(),
-        roomLink: `https://meet.jit.si/RoomMeeting-DEMO-${Date.now()
+        roomLink: `https://8e42-2001-ee0-4b49-c580-80e9-81fe-65db-5870.ngrok-free.app/RoomMeeting-DEMO-${Date.now()
           .toString()
           .slice(-6)}`,
         id: `DEMO-${Date.now()}`,
@@ -238,7 +238,7 @@ export default function CreateRoom({ user, onRoomCreated }: CreateRoomProps) {
                 <Input
                   value={
                     createdRoom.roomLink ||
-                    `https://meet.jit.si/RoomMeeting-${createdRoom.roomCode}`
+                    `https://8e42-2001-ee0-4b49-c580-80e9-81fe-65db-5870.ngrok-free.app/RoomMeeting-${createdRoom.roomCode}`
                   }
                   readOnly
                   className="text-xs bg-gray-50"
@@ -249,7 +249,7 @@ export default function CreateRoom({ user, onRoomCreated }: CreateRoomProps) {
                   onClick={() =>
                     copyToClipboard(
                       createdRoom.roomLink ||
-                        `https://meet.jit.si/RoomMeeting-${createdRoom.roomCode}`
+                        `https://8e42-2001-ee0-4b49-c580-80e9-81fe-65db-5870.ngrok-free.app/RoomMeeting-${createdRoom.roomCode}`
                     )
                   }
                 >

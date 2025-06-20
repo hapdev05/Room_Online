@@ -122,16 +122,6 @@ export default function MeetingDashboard({
 
       <div className="max-w-4xl mx-auto p-8">
         {/* Server Notice */}
-        <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-            <span className="text-sm text-green-700">
-              <strong>Server Mode:</strong> Kết nối với server thật. Tất cả dữ
-              liệu được lưu trên server.
-            </span>
-          </div>
-        </div>
-
         <div className="text-center mb-12">
           <h1 className="text-3xl font-normal text-gray-900 mb-4">
             Cuộc họp video an toàn và chất lượng cao
